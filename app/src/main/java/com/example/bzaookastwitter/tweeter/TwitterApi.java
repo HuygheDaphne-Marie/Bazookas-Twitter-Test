@@ -11,7 +11,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterApi implements Tweeter {
     private Twitter twitter;
 
-    TwitterApi() {
+    public TwitterApi() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey("consumer key")
