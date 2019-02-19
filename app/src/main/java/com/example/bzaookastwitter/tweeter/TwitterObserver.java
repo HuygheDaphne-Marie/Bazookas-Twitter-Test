@@ -7,7 +7,7 @@ import java.util.List;
 import twitter4j.Status;
 
 public class TwitterObserver {
-    protected TwitterSubjectInterface subject;
+    private TwitterSubjectInterface subject;
 
     public TwitterObserver(TwitterSubjectInterface subject) {
         this.subject = subject;
