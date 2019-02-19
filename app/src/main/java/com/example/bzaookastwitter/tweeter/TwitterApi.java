@@ -1,5 +1,7 @@
 package com.example.bzaookastwitter.tweeter;
 
+import com.example.bazookastwitter.BuildConfig;
+
 import java.util.List;
 
 import twitter4j.Status;
@@ -14,10 +16,10 @@ public class TwitterApi implements Tweeter {
     public TwitterApi() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
-                .setOAuthConsumerKey("consumer key")
-                .setOAuthConsumerSecret("consumer secret")
-                .setOAuthAccessToken("access token")
-                .setOAuthAccessTokenSecret("access token secret");
+                .setOAuthConsumerKey(BuildConfig.API_CONSUMERKEY)
+                .setOAuthConsumerSecret(BuildConfig.API_CONSUMERSECRET)
+                .setOAuthAccessToken(BuildConfig.API_ACCESSTOKEN)
+                .setOAuthAccessTokenSecret(BuildConfig.API_ACCESSTOKENSECRET);
         TwitterFactory tf = new TwitterFactory(cb.build());
         twitter = tf.getInstance();
     }
