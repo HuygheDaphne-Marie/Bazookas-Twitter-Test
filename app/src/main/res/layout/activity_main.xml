@@ -7,19 +7,15 @@
     android:background="@color/backgroundColor"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/tweetContainer"
-        android:layout_width="395dp"
-        android:layout_height="677dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tweetRecycler"
+        android:layout_width="379dp"
+        android:layout_height="673dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
-        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"></LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
