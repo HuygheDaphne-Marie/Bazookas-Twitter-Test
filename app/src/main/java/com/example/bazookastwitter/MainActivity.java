@@ -6,13 +6,19 @@ import android.util.Log;
 
 import com.example.bzaookastwitter.tweeter.*;
 
+import twitter4j.DirectMessage;
 import twitter4j.FilterQuery;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
 import twitter4j.StatusListener;
+import twitter4j.TwitterFactory;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
+import twitter4j.User;
+import twitter4j.UserList;
+import twitter4j.UserStreamListener;
+import twitter4j.conf.ConfigurationBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         // Doing the thing
         TwitterSubject subject = new TwitterSubject();
         TwitterObserver observer = new TwitterObserver(subject);
+        doThing();
     }
 
     private void doThing() {
@@ -51,11 +58,23 @@ public class MainActivity extends AppCompatActivity {
                 ex.printStackTrace();
             }
         };
-        TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
+
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true)
+                .setOAuthConsumerKey(BuildConfig.API_CONSUMERKEY)
+                .setOAuthConsumerSecret(BuildConfig.API_CONSUMERSECRET)
+                .setOAuthAccessToken(BuildConfig.API_ACCESSTOKEN)
+                .setOAuthAccessTokenSecret(BuildConfig.API_ACCESSTOKENSECRET);
+
+
+        TwitterStream twitterStream = new TwitterStreamFactory(cb.build()).getInstance();
+
+        FilterQuery fq = new FilterQuery();
+        String keywords[] = {"#wearebazookas"};
+        fq.track(keywords);
+        fq.follow(1094953255879278592L);
         twitterStream.addListener(listener);
-        // sample() method internally creates a thread which manipulates TwitterStream and calls these adequate listener methods continuously.
-        FilterQuery filterQuery = new FilterQuery();
-        filterQuery.track("#wearebazookas");
-        twitterStream.filter(filterQuery);
+        twitterStream.filter(fq);
+
     }
 }
