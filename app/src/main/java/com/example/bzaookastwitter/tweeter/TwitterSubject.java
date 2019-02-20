@@ -26,7 +26,7 @@ public class TwitterSubject implements TwitterSubjectInterface {
     private final String LOG_TAG = "myapp:twitterSubject";
     private Twitter twitter;
     private TwitterStream tStream;
-    private List<TwitterObserver> observers = new ArrayList<>();
+    private List<TwitterObserverInterface> observers = new ArrayList<>();
     private volatile List<Status> userTweets = new ArrayList<>();
     private volatile List<Status> hashtagTweets = new ArrayList<>();
 
@@ -43,8 +43,8 @@ public class TwitterSubject implements TwitterSubjectInterface {
 
         // TODO does this fit well here??
         fetchHashtagTweets("#wearebazookas"); // TODO make these class properties??
-        fetchUserTweets("HuygheHenri");
-        startStream("#wearebazookas", "HuygheHenri");
+        fetchUserTweets("wearebazookas");
+        startStream("#wearebazookas", "wearebazookas");
     }
 
     @Override
@@ -68,12 +68,12 @@ public class TwitterSubject implements TwitterSubjectInterface {
     }
 
     @Override
-    public void attach(TwitterObserver observer) {
+    public void attach(TwitterObserverInterface observer) {
         observers.add(observer);
     }
     @Override
     public void notifyAllObservers(String nameOfListThatGotUpdated) {
-        for(TwitterObserver observer : observers) {
+        for(TwitterObserverInterface observer : observers) {
             observer.update(nameOfListThatGotUpdated);
         }
     }

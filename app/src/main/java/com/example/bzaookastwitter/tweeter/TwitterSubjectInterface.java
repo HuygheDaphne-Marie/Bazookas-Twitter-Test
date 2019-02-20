@@ -8,6 +8,6 @@ public interface TwitterSubjectInterface {
     public List<Status> getHashtagTweets();
     public void setUserTweets(List<Status> tweets);
     public void setHashtagTweets(List<Status> tweets);
-    public void attach(TwitterObserver observer);
+    public void attach(TwitterObserverInterface observer);
     public void notifyAllObservers(String nameOfListThatGotUpdated);
 }
