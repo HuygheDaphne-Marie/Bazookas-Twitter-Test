@@ -1,17 +1,20 @@
 package com.example.bzaookastwitter.tweeter;
 
 import android.util.Log;
-
+import android.widget.LinearLayout;
+import com.example.bazookastwitter.TweetDisplayActivity;
 import java.util.List;
-
 import twitter4j.Status;
 
 public class TwitterObserver {
     private TwitterSubjectInterface subject;
+    private LinearLayout layout;
+    private TweetDisplayActivity activity;
 
-    public TwitterObserver(TwitterSubjectInterface subject) {
+    public TwitterObserver(TwitterSubjectInterface subject, TweetDisplayActivity activity) {
         this.subject = subject;
         this.subject.attach(this);
+        this.activity = activity;
     }
 
     public List<Status> getUserTweets() {
@@ -26,10 +29,11 @@ public class TwitterObserver {
 //            }
 //        }
 //
-//        if(listName.equals("hashtagTweets")) {
+        if(listName.equals("hashtagTweets")) {
+            activity.AddTweetsToView(subject.getHashtagTweets());
 //            for(Status status : subject.getHashtagTweets()) {
 //                Log.d("myapp:hashtag", status.getText());
 //            }
-//        }
+        }
     }
 }
