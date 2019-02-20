@@ -19,7 +19,7 @@ public class TwitterObserver {
     }
 
     public void update(String listName) {
-        Log.d("myapp", "Update!");
+        Log.v("myapp", "Update!");
 //        if(listName.equals("userTweets")) {
 //            for(Status status : subject.getUserTweets()) {
 //                Log.d("myapp:usertweet", status.getText());

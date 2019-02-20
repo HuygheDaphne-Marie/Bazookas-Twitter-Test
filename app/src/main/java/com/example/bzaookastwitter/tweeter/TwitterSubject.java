@@ -89,6 +89,7 @@ public class TwitterSubject implements TwitterSubjectInterface {
     }
 
     private void fetchUserTweets(final String screenName) {
+        Log.v(LOG_TAG, "Fetching user tweets");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -108,6 +109,7 @@ public class TwitterSubject implements TwitterSubjectInterface {
         }).start();
     }
     private void fetchHashtagTweets(final String tag) {
+        Log.v(LOG_TAG, "Fetching hashtag tweets");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -144,6 +146,7 @@ public class TwitterSubject implements TwitterSubjectInterface {
         }).start();
     }
     private void startStream(final String hashtag, long userId) {
+        Log.v(LOG_TAG, "Starting stream");
         StatusListener listener = new StatusListener(){
             public void onStatus(Status status) {
                 if(status.getUser().getId() == userTweets.get(0).getUser().getId()) {

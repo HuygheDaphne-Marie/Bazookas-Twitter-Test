@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(LOG_TAG, "App started!");
+        Log.v(LOG_TAG, "App started!");
 
         // Doing the thing
         TwitterSubject subject = new TwitterSubject();
