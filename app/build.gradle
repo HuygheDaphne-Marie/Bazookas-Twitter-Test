@@ -14,7 +14,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
         }
+    }
+    buildTypes.each {
+        it.buildConfigField 'String', 'API_CONSUMERKEY', API_CONSUMERKEY
+        it.buildConfigField 'String', 'API_CONSUMERSECRET', API_CONSUMERSECRET
+        it.buildConfigField 'String', 'API_ACCESSTOKEN', API_ACCESSTOKEN
+        it.buildConfigField 'String', 'API_ACCESSTOKENSECRET', API_ACCESSTOKENSECRET
     }
 }
 
@@ -26,4 +33,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation files('libs/twitter4j-core-4.0.7.jar')
+    implementation files('libs/twitter4j-stream-4.0.7.jar')
 }
