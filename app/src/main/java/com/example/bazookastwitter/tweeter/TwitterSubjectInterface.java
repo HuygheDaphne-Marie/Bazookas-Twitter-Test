@@ -1,4 +1,4 @@
-package com.example.bzaookastwitter.tweeter;
+package com.example.bazookastwitter.tweeter;
 
 import java.util.List;
 import twitter4j.Status;

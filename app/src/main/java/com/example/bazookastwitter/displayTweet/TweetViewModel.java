@@ -1,4 +1,4 @@
-package com.example.bazookastwitter;
+package com.example.bazookastwitter.displayTweet;
 
 import android.support.annotation.NonNull;
 

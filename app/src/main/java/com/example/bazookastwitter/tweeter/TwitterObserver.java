@@ -1,4 +1,4 @@
-package com.example.bzaookastwitter.tweeter;
+package com.example.bazookastwitter.tweeter;
 
 import android.util.Log;
 

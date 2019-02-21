@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import com.example.bzaookastwitter.tweeter.*;
+
+import com.example.bazookastwitter.displayTweet.TweetAdapter;
+import com.example.bazookastwitter.displayTweet.TweetViewModel;
+import com.example.bazookastwitter.displayTweet.TweetViewModelInterface;
+import com.example.bazookastwitter.tweeter.TwitterObserverInterface;
+import com.example.bazookastwitter.tweeter.TwitterSubject;
+import com.example.bazookastwitter.tweeter.TwitterSubjectInterface;
 
 import java.util.ArrayList;
 import java.util.List;

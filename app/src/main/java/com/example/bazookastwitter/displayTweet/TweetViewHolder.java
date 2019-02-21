@@ -1,9 +1,11 @@
-package com.example.bazookastwitter;
+package com.example.bazookastwitter.displayTweet;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.bazookastwitter.R;
 
 public class TweetViewHolder extends RecyclerView.ViewHolder {
     private TextView headerTextView;
