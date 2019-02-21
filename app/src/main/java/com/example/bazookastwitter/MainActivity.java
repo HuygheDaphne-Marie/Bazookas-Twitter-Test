@@ -1,27 +1,21 @@
 package com.example.bazookastwitter;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.example.bzaookastwitter.tweeter.*;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import twitter4j.Status;
 
-public class MainActivity extends AppCompatActivity implements TweetDisplayActivity {
+public class MainActivity extends AppCompatActivity implements TwitterObserverInterface {
 
     private final String LOG_TAG = "myapp:mainActivity";
+    private TwitterSubjectInterface subject;
+    private List<TweetViewModelInterface> tweets = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -33,9 +27,9 @@ public class MainActivity extends AppCompatActivity implements TweetDisplayActiv
         setContentView(R.layout.activity_main);
         Log.v(LOG_TAG, "App started!");
 
-        // Doing the thing
-        TwitterSubject subject = new TwitterSubject();
-        TwitterObserver observer = new TwitterObserver(subject,this);
+        // Create & attach to observable
+        this.subject = new TwitterSubject();
+        this.subject.attach(this);
 
         // Setup View
         recyclerView = findViewById(R.id.tweetRecycler);
@@ -43,24 +37,29 @@ public class MainActivity extends AppCompatActivity implements TweetDisplayActiv
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new TweetAdapter(subject);
+        mAdapter = new TweetAdapter(this.tweets);
         recyclerView.setAdapter(mAdapter);
     }
 
     @Override
-    public void AddTweetsToView(final List<Status> statuses) {
-        final Context context = this;
-        runOnUiThread(new Runnable() {
+    public void update(final String listName) {
+        Log.d(LOG_TAG, "Got update");
 
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(listName.equals("userTweets")) {
+                    Log.d(LOG_TAG, "Setting user tweets");
+                    tweets.clear();
+                    for(Status tweet : subject.getUserTweets()) {
+                        tweets.add(new TweetViewModel(tweet));
+                    }
 
-                for(Status status : statuses) {
-                    Log.d(LOG_TAG, status.getText());
-//                    ll.addView(makeTweet(status, context));
                 }
+                mAdapter.notifyDataSetChanged();
             }
         });
+
     }
 
 //    private LinearLayout makeTweet(Status status, Context context) {
