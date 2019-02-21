@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.example.bazookastwitter.displayTweet.TweetAdapter;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         this.subject.attach(this);
 
         // Setup View
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         recyclerView = findViewById(R.id.tweetRecycler);
 
         layoutManager = new LinearLayoutManager(this);
