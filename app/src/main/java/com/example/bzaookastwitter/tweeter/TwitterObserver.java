@@ -10,10 +10,10 @@ public class TwitterObserver implements TwitterObserverInterface {
     private TwitterSubjectInterface subject;
     private TweetDisplayActivity activity;
 
-    public TwitterObserver(TwitterSubjectInterface subject, TweetDisplayActivity activity) {
+    public TwitterObserver(TwitterSubjectInterface subject) {
         this.subject = subject;
         this.subject.attach(this);
-        this.activity = activity;
+//        this.activity = activity;
     }
 
     public List<Status> getUserTweets() {
@@ -24,7 +24,7 @@ public class TwitterObserver implements TwitterObserverInterface {
     public void update(String listName) {
         Log.v("myapp", "Update!");
         if(listName.equals("userTweets")) {
-            activity.AddTweetsToView(subject.getUserTweets());
+//            activity.AddTweetsToView(subject.getUserTweets());
 //            for(Status status : subject.getUserTweets()) {
 //                Log.d("myapp:usertweet", status.getText());
 //            }
