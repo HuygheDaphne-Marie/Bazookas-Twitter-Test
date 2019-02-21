@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 
 import com.example.bazookastwitter.displayTweet.TweetAdapter;
 import com.example.bazookastwitter.displayTweet.TweetViewModel;
@@ -16,7 +17,10 @@ import com.example.bazookastwitter.tweeter.TwitterSubjectInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import twitter4j.MediaEntity;
 import twitter4j.Status;
+import twitter4j.URLEntity;
 
 public class MainActivity extends AppCompatActivity implements TwitterObserverInterface {
 
@@ -39,7 +43,12 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         this.subject.attach(this);
 
         // Setup View
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        if(toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
         recyclerView = findViewById(R.id.tweetRecycler);
 
         layoutManager = new LinearLayoutManager(this);
@@ -50,15 +59,23 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
     public void update(final String listName) {
-        Log.d(LOG_TAG, "Got update");
+        Log.v(LOG_TAG, "Got update");
 
         runOnUiThread(new Runnable() {
             @Override
-            public void run() {
+            public void run() { // TODO move this into function, so it can be called when other tweets need to be displayed
                 if(listName.equals("userTweets")) {
-                    Log.d(LOG_TAG, "Setting user tweets");
+                    Log.v(LOG_TAG, "Setting user tweets");
                     tweets.clear();
+                    mAdapter.notifyDataSetChanged(); // TODO does this actually help?
                     for(Status tweet : subject.getUserTweets()) {
                         tweets.add(new TweetViewModel(tweet));
                     }
