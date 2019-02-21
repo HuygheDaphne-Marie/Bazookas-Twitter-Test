@@ -67,39 +67,4 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         });
 
     }
-
-//    private LinearLayout makeTweet(Status status, Context context) {
-//        LinearLayout tweet = createTweetBody(context);
-//
-//        tweet.addView(tweetHeader(status));
-//        tweet.addView(tweetText(status));
-//
-//        return tweet;
-//    }
-//
-//    private LinearLayout createTweetBody( Context context) {
-//        LinearLayout tweet = (LinearLayout) getLayoutInflater().inflate(R.layout.tweet_body, null);
-//
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//        float d = context.getResources().getDisplayMetrics().density;
-//        int margin = (int)(8*d);
-//
-//        params.setMargins(0, margin, 0, margin);
-//        tweet.setLayoutParams(params);
-//        return tweet;
-//    }
-//
-//    private TextView tweetHeader(Status status) {
-//        TextView textView = (TextView) getLayoutInflater().inflate(R.layout.tweet_header, null);
-//        String text = "@"+status.getUser().getScreenName().toUpperCase();
-//        textView.setText(text);
-//        return textView;
-//    }
-//
-//    private TextView tweetText(Status status) {
-//        TextView textView = (TextView) getLayoutInflater().inflate(R.layout.tweet_text, null);
-//        String tweetText = status.getText().replaceAll("\\n", "");
-//        textView.setText(tweetText);
-//        return textView;
-//    }
 }
