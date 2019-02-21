@@ -18,6 +18,16 @@
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/bazookasPrimary"/>
+    <ImageView
+        android:id="@+id/content_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_below="@id/header_text"
+        android:padding="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/tweet_image_content" />
     <TextView
         android:id="@+id/body_text"
         android:layout_width="match_parent"
@@ -26,7 +36,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textColor="@color/dark"
-        android:layout_below="@id/header_text"/>
+        android:layout_below="@id/content_image"/>
 
     <TextView
         android:id="@+id/date_text"
