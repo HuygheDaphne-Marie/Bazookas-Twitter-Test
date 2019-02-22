@@ -1,4 +1,4 @@
-package com.example.bzaookastwitter.tweeter;
+package com.example.bazookastwitter.tweeter;
 
 import android.util.Log;
 
@@ -26,11 +26,13 @@ public class TwitterSubject implements TwitterSubjectInterface {
     private final String LOG_TAG = "myapp:twitterSubject";
     private Twitter twitter;
     private TwitterStream tStream;
-    private List<TwitterObserver> observers = new ArrayList<>();
+    private List<TwitterObserverInterface> observers = new ArrayList<>();
     private volatile List<Status> userTweets = new ArrayList<>();
     private volatile List<Status> hashtagTweets = new ArrayList<>();
 
-    public TwitterSubject() {
+    private static final TwitterSubject instance = new TwitterSubject();
+
+    private TwitterSubject() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(BuildConfig.API_CONSUMERKEY)
@@ -43,8 +45,12 @@ public class TwitterSubject implements TwitterSubjectInterface {
 
         // TODO does this fit well here??
         fetchHashtagTweets("#wearebazookas"); // TODO make these class properties??
-        fetchUserTweets("HuygheHenri");
-        startStream("#wearebazookas", "HuygheHenri");
+        fetchUserTweets("wearebazookas");
+        startStream("#wearebazookas", "wearebazookas");
+    }
+
+    public static TwitterSubject getInstance() {
+        return instance;
     }
 
     @Override
@@ -68,12 +74,12 @@ public class TwitterSubject implements TwitterSubjectInterface {
     }
 
     @Override
-    public void attach(TwitterObserver observer) {
+    public void attach(TwitterObserverInterface observer) {
         observers.add(observer);
     }
     @Override
     public void notifyAllObservers(String nameOfListThatGotUpdated) {
-        for(TwitterObserver observer : observers) {
+        for(TwitterObserverInterface observer : observers) {
             observer.update(nameOfListThatGotUpdated);
         }
     }
@@ -89,6 +95,7 @@ public class TwitterSubject implements TwitterSubjectInterface {
     }
 
     private void fetchUserTweets(final String screenName) {
+        Log.v(LOG_TAG, "Fetching user tweets");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -108,6 +115,7 @@ public class TwitterSubject implements TwitterSubjectInterface {
         }).start();
     }
     private void fetchHashtagTweets(final String tag) {
+        Log.v(LOG_TAG, "Fetching hashtag tweets");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -138,12 +146,13 @@ public class TwitterSubject implements TwitterSubjectInterface {
                     }
                 } catch (TwitterException e) {
                     e.printStackTrace();
-                    Log.e(LOG_TAG, "Something went wrong trying to get the provided screenName's ID");
+                    Log.e(LOG_TAG, "Something went wrong trying to get the provided screenName's ID for stream");
                 }
             }
         }).start();
     }
     private void startStream(final String hashtag, long userId) {
+        Log.v(LOG_TAG, "Starting stream");
         StatusListener listener = new StatusListener(){
             public void onStatus(Status status) {
                 if(status.getUser().getId() == userTweets.get(0).getUser().getId()) {
