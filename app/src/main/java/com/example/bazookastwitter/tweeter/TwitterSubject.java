@@ -146,7 +146,7 @@ public class TwitterSubject implements TwitterSubjectInterface {
                     }
                 } catch (TwitterException e) {
                     e.printStackTrace();
-                    Log.e(LOG_TAG, "Something went wrong trying to get the provided screenName's ID");
+                    Log.e(LOG_TAG, "Something went wrong trying to get the provided screenName's ID for stream");
                 }
             }
         }).start();
