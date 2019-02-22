@@ -57,7 +57,7 @@ public class TweetViewModel implements TweetViewModelInterface {
     public Bitmap getImg() {
         return img;
     }
-    public void setImg(@NonNull final String imgUrl) {
+    public void setImg(@NonNull final String imgUrl) { // FIXME First images are not getting set quickly enough causing tweets which should have an image to not have one until their view is recycled
         new Thread(new Runnable() { // FIXME this is dirtier than your mama *yikes*
             @Override
             public void run() {
