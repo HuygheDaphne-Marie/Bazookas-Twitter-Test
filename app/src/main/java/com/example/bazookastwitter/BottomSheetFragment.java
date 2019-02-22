@@ -32,10 +32,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
-        TextView header = view.findViewById(R.id.bottom_sheet_header);
         TextView body = view.findViewById(R.id.bottom_sheet_body);
-        header.setText(tweet.getHeaderText());
+        TextView date = view.findViewById(R.id.bottom_sheet_date);
         body.setText(tweet.getBodyText());
+        date.setText(tweet.getDateText());
         return view;
     }
 }
