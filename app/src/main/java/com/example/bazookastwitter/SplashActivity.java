@@ -15,6 +15,7 @@ public class SplashActivity extends Activity {
 
         Log.v(LOG_TAG, "Splash here!");
 
+        // TODO start subject here and pass it with the intent to mainActivity? might fix image issue..
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
