@@ -22,25 +22,29 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="@dimen/button_height"
             android:id="@+id/toolbar_timeline"
             android:text="@string/action_timeline"
             android:textColor="@color/white"
             android:textAllCaps="false"
             android:layout_gravity="center"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:background="@drawable/active_btn_rounded"/>
+            android:background="@drawable/active_btn_rounded"
+            android:enabled="false"
+            android:onClick="timelinePressed"/>
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="@dimen/button_height"
             android:id="@+id/toolbar_hashtag"
             android:text="@string/action_hashtag"
             android:textColor="@color/bazookasPrimary"
             android:textAllCaps="false"
             android:layout_gravity="center"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:background="@drawable/inactive_btn_rounded"/>
+            android:background="@drawable/inactive_btn_rounded"
+            android:enabled="true"
+            android:onClick="hashtagsPressed"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -48,14 +52,13 @@
         android:id="@+id/tweetRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:layout_marginEnd="@dimen/activity_margin"
+        android:layout_marginBottom="@dimen/activity_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
 
 </android.support.constraint.ConstraintLayout>
