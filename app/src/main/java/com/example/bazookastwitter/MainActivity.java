@@ -26,14 +26,16 @@ import java.util.List;
 import twitter4j.Status;
 
 public class MainActivity extends AppCompatActivity implements TwitterObserverInterface, OnTweetListener {
-
     private final String LOG_TAG = "myapp:mainActivity";
     private TwitterSubjectInterface subject;
-    private List<TweetViewModelInterface> tweets = new ArrayList<>();
+    private List<TweetViewModelInterface> activeTweets = new ArrayList<>();
+    private List<TweetViewModelInterface> userTweets = new ArrayList<>(); // TODO *yuck*
+    private List<TweetViewModelInterface> hashtagTweets = new ArrayList<>();
+
+    // Views //
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
     private Button timelineBtn;
     private Button hashtagsBtn;
 
@@ -62,39 +64,64 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new TweetAdapter(this.tweets, this);
+        mAdapter = new TweetAdapter(this.activeTweets, this);
         recyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-
     @Override
     public void update(final String listName) {
         Log.v(LOG_TAG, "Got update");
-        if(!timelineBtn.isEnabled() && listName.equals("userTweets")) {
-            Log.v(LOG_TAG, "Setting user tweets");
-            updateRecyclerData(subject.getUserTweets());
-        }
-        if(!hashtagsBtn.isEnabled() && listName.equals("userTweets")) {
-            Log.v(LOG_TAG, "Setting hashtag tweets");
-            updateRecyclerData(subject.getHashtagTweets());
+        if(listName.equals("userTweets")) {
+            updateTweetModelList(userTweets, subject.getUserTweets());
+            if(!timelineBtn.isEnabled()) {
+                updateRecyclerData(userTweets);
+            }
         }
 
+        if(listName.equals("hashtagTweets")) {
+            updateTweetModelList(hashtagTweets, subject.getHashtagTweets());
+            if(!hashtagsBtn.isEnabled()) {
+                updateRecyclerData(hashtagTweets);
+            }
+        }
     }
 
-    private void updateRecyclerData(final List<Status> newTweets) {
+    private void updateTweetModelList(List<TweetViewModelInterface> list, List<Status> tweetList) {
+        if(list.size() != 0) {
+            appendToTweetModels(list, tweetList);
+        } else {
+            setTweetModels(list, tweetList);
+        }
+    } // TODO this is a lot of functions all related to eachtoher, class maybe?
+    private void setTweetModels(List<TweetViewModelInterface> tweetModels, List<Status> tweets) {
+        for(Status tweet :  tweets) {
+            tweetModels.add(new TweetViewModel(tweet));
+        }
+    }
+    private void appendToTweetModels(List<TweetViewModelInterface> oldTweets, List<Status> newTweets) {
+        boolean gotToOldTweet = false;
+        int idx = 0;
+        while (!gotToOldTweet) {
+            TweetViewModelInterface newTweetModel = new TweetViewModel(newTweets.get(idx));
+            if(!newTweetModel.equals(oldTweets.get(idx))) {
+                oldTweets.add(0, newTweetModel);
+            } else {
+                gotToOldTweet = true;
+            }
+            idx++;
+        }
+    }
+    private void updateRecyclerData(final List<TweetViewModelInterface> newTweetsModels) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tweets.clear();
-                for(Status tweet : newTweets) {
-                    tweets.add(new TweetViewModel(tweet));
-                }
+                activeTweets.clear();
+                activeTweets.addAll(newTweetsModels);
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -114,26 +141,24 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         if (isTimeline) {
             enableButton(timelineBtn);
             disableButton(hashtagsBtn);
-            updateRecyclerData(subject.getUserTweets());
+            updateRecyclerData(userTweets);
         } else {
             enableButton(hashtagsBtn);
             disableButton(timelineBtn);
-            updateRecyclerData(subject.getHashtagTweets());
+            updateRecyclerData(hashtagTweets);
         }
     }
 
     public void timelinePressed(View view) {
-        Log.v(LOG_TAG, "timelinePressed");
         handlePressed(true, (Button) view);
     }
     public void hashtagsPressed(View view) {
-        Log.v(LOG_TAG, "hashtagsPressed");
         handlePressed(false, (Button) view);
     }
 
     @Override
     public void onTweetClick(int position) {
-        Log.d(LOG_TAG, tweets.get(position).toString());
+        Log.d(LOG_TAG, activeTweets.get(position).toString());
         // get tweet data
         // pass tweet data to modal
         // open modal with tweet data
