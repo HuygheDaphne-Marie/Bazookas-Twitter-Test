@@ -33,16 +33,16 @@ public class TweetViewHolder extends RecyclerView.ViewHolder implements View.OnC
             if(viewModel.getImg() != null) {
                 imageView.setImageBitmap(viewModel.getImg());
             } else {
-                Ion.with(imageView)
-                        .load(viewModel.getImgUrl())
-                        .withBitmapInfo()
-                        .setCallback(new FutureCallback<ImageViewBitmapInfo>() {
-                            @Override
-                            public void onCompleted(Exception e, ImageViewBitmapInfo result) {
-                                Bitmap b = result.getBitmapInfo().bitmap;
-                                viewModel.setImg(b);
-                            }
-                        });
+                Ion.with(imageView)// TODO glide
+                        .load(viewModel.getImgUrl());
+//                        .withBitmapInfo()
+//                        .setCallback(new FutureCallback<ImageViewBitmapInfo>() {
+//                            @Override
+//                            public void onCompleted(Exception e, ImageViewBitmapInfo result) {
+//                                Bitmap b = result.getBitmapInfo().bitmap;
+//                                viewModel.setImg(b);
+//                            }
+//                        });
                 }
         }
         bodyTextView.setText(viewModel.getBodyText());
