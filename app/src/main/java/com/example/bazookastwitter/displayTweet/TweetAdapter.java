@@ -11,15 +11,17 @@ import java.util.List;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetViewHolder> {
     private List<TweetViewModelInterface> tweetsModels;
+    private OnTweetListener onTweetListener;
 
-    public TweetAdapter(List<TweetViewModelInterface> tweets) {
-        this.tweetsModels = tweets;
+    public TweetAdapter(List<TweetViewModelInterface> tweetsModels, OnTweetListener onTweetListener) {
+        this.tweetsModels = tweetsModels;
+        this.onTweetListener = onTweetListener;
     }
 
     @Override
     public TweetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new TweetViewHolder(view);
+        return new TweetViewHolder(view, onTweetListener);
     }
 
     @Override

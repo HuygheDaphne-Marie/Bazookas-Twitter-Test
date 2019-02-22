@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.bazookastwitter.displayTweet.OnTweetListener;
 import com.example.bazookastwitter.displayTweet.TweetAdapter;
 import com.example.bazookastwitter.displayTweet.TweetViewModel;
 import com.example.bazookastwitter.displayTweet.TweetViewModelInterface;
@@ -22,11 +23,9 @@ import com.example.bazookastwitter.tweeter.TwitterSubjectInterface;
 import java.util.ArrayList;
 import java.util.List;
 
-import twitter4j.MediaEntity;
 import twitter4j.Status;
-import twitter4j.URLEntity;
 
-public class MainActivity extends AppCompatActivity implements TwitterObserverInterface {
+public class MainActivity extends AppCompatActivity implements TwitterObserverInterface, OnTweetListener {
 
     private final String LOG_TAG = "myapp:mainActivity";
     private TwitterSubjectInterface subject;
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new TweetAdapter(this.tweets);
+        mAdapter = new TweetAdapter(this.tweets, this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         view.setTextColor(ContextCompat.getColor(this, R.color.bazookasPrimary));
         view.setBackground(getDrawable(R.drawable.inactive_btn_rounded));
     }
-
     private void handlePressed(boolean isTimeline, Button view) {
         if (isTimeline) {
             enableButton((Button) findViewById(R.id.toolbar_timeline));
@@ -119,12 +117,19 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     }
 
     public void timelinePressed(View view) {
-        Log.d(LOG_TAG, "timelinePressed");
+        Log.v(LOG_TAG, "timelinePressed");
         handlePressed(true, (Button) view);
     }
-
     public void hashtagsPressed(View view) {
-        Log.d(LOG_TAG, "hashtagsPressed");
+        Log.v(LOG_TAG, "hashtagsPressed");
         handlePressed(false, (Button) view);
+    }
+
+    @Override
+    public void onTweetClick(int position) {
+        Log.d(LOG_TAG, tweets.get(position).toString());
+        // get tweet data
+        // pass tweet data to modal
+        // open modal with tweet data
     }
 }
