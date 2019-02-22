@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private Button timelineBtn;
+    private Button hashtagsBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,12 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         Log.v(LOG_TAG, "App started!");
 
         // Create & attach to observable
-        this.subject = new TwitterSubject();
+        this.subject = TwitterSubject.getInstance();
         this.subject.attach(this);
 
         // Setup View
+        timelineBtn = findViewById(R.id.toolbar_timeline);
+        hashtagsBtn = findViewById(R.id.toolbar_hashtag);
         Toolbar toolbar = findViewById(R.id.toolbar);
         if(toolbar != null) {
             setSupportActionBar(toolbar);
@@ -71,10 +76,11 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     @Override
     public void update(final String listName) {
         Log.v(LOG_TAG, "Got update");
-        if(listName.equals("userTweets")) {
+        if(!timelineBtn.isEnabled() && listName.equals("userTweets")) {
             Log.v(LOG_TAG, "Setting user tweets");
             updateRecyclerData(subject.getUserTweets());
-        } else {
+        }
+        if(!hashtagsBtn.isEnabled() && listName.equals("userTweets")) {
             Log.v(LOG_TAG, "Setting hashtag tweets");
             updateRecyclerData(subject.getHashtagTweets());
         }
@@ -106,12 +112,12 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     }
     private void handlePressed(boolean isTimeline, Button view) {
         if (isTimeline) {
-            enableButton((Button) findViewById(R.id.toolbar_timeline));
-            disableButton((Button) findViewById(R.id.toolbar_hashtag));
+            enableButton(timelineBtn);
+            disableButton(hashtagsBtn);
             updateRecyclerData(subject.getUserTweets());
         } else {
-            enableButton((Button) findViewById(R.id.toolbar_hashtag));
-            disableButton((Button) findViewById(R.id.toolbar_timeline));
+            enableButton(hashtagsBtn);
+            disableButton(timelineBtn);
             updateRecyclerData(subject.getHashtagTweets());
         }
     }
