@@ -36,7 +36,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetViewHolder> {
 
     @Override
     public int getItemViewType(final int position) {
-        if(tweetsModels.get(position).getImg() == null) {
+        if(tweetsModels.get(position).getImgUrl() == null) {
             return R.layout.tweet;
         } else {
             return R.layout.tweet_with_image;

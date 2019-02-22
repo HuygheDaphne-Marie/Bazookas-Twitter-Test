@@ -1,5 +1,6 @@
 package com.example.bazookastwitter.displayTweet;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bazookastwitter.R;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.ImageViewBitmapInfo;
 import com.koushikdutta.ion.Ion;
 
 public class TweetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -26,15 +29,21 @@ public class TweetViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     public void bindData(final TweetViewModelInterface viewModel) {
         headerTextView.setText(viewModel.getHeaderText());
-        if(imageView != null && viewModel.getImg() != null) { // TODO second clause might be redundant..
-            imageView.setImageBitmap(viewModel.getImg()); // FIXME any way of doing this async and updating tweet once the image is loaded
-            // TODO Ion images kept disappearing randomly, probably because Ion couldn't get them quick enough
-//            Ion.with(imageView)
-////                    .placeholder(R.drawable.placeholder_image)
-////                    .error(R.drawable.error_image) // TODO https://github.com/koush/ion#load-an-image-into-an-imageview
-////                    .animateLoad(spinAnimation)
-////                    .animateIn(fadeInAnimation)
-//                    .load(viewModel.getImgUrl());
+        if(imageView != null) {
+            if(viewModel.getImg() != null) {
+                imageView.setImageBitmap(viewModel.getImg());
+            } else {
+                Ion.with(imageView)
+                        .load(viewModel.getImgUrl())
+                        .withBitmapInfo()
+                        .setCallback(new FutureCallback<ImageViewBitmapInfo>() {
+                            @Override
+                            public void onCompleted(Exception e, ImageViewBitmapInfo result) {
+                                Bitmap b = result.getBitmapInfo().bitmap;
+                                viewModel.setImg(b);
+                            }
+                        });
+                }
         }
         bodyTextView.setText(viewModel.getBodyText());
         dateTextView.setText(viewModel.getDateText());
