@@ -68,12 +68,23 @@ public class TweetViewModel implements TweetViewModelInterface {
         for(URLEntity url : tweet.getURLEntities()) {
             tweetText = tweetText.replace(url.getURL(), url.getDisplayURL());
         }
+        tweetText = tweetText.replaceAll("\\n", "");
         return tweetText.split(" https://t.co")[0];
     }
     private void handleMedia(@NonNull Status tweet) {
         MediaEntity[] media = tweet.getMediaEntities();
         if (media.length > 0) {
             setImgUrl(media[0].getMediaURL());
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other.getClass() == this.getClass()) {
+            TweetViewModel otherTweetViewModel = (TweetViewModel) other;
+            return otherTweetViewModel.bodyText.equals(this.bodyText);
+        } else {
+            return false;
         }
     }
 }

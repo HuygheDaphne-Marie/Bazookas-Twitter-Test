@@ -19,4 +19,7 @@ public interface TweetViewModelInterface {
 
     String getImgUrl();
     void setImgUrl(@NonNull String imgUrl);
+
+    @Override
+    boolean equals(Object other);
 }
