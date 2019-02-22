@@ -1,5 +1,7 @@
 package com.example.bazookastwitter;
 
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.bazookastwitter.displayTweet.TweetAdapter;
 import com.example.bazookastwitter.displayTweet.TweetViewModel;
@@ -68,22 +72,59 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     @Override
     public void update(final String listName) {
         Log.v(LOG_TAG, "Got update");
+        if(listName.equals("userTweets")) {
+            Log.v(LOG_TAG, "Setting user tweets");
+            updateRecyclerData(subject.getUserTweets());
+        } else {
+            Log.v(LOG_TAG, "Setting hashtag tweets");
+            updateRecyclerData(subject.getHashtagTweets());
+        }
 
+    }
+
+    private void updateRecyclerData(final List<Status> newTweets) {
         runOnUiThread(new Runnable() {
             @Override
-            public void run() { // TODO move this into function, so it can be called when other tweets need to be displayed
-                if(listName.equals("userTweets")) {
-                    Log.v(LOG_TAG, "Setting user tweets");
-                    tweets.clear();
-                    mAdapter.notifyDataSetChanged(); // TODO does this actually help?
-                    for(Status tweet : subject.getUserTweets()) {
-                        tweets.add(new TweetViewModel(tweet));
-                    }
-
+            public void run() {
+                tweets.clear();
+                for(Status tweet : newTweets) {
+                    tweets.add(new TweetViewModel(tweet));
                 }
                 mAdapter.notifyDataSetChanged();
             }
         });
+    }
 
+    private void enableButton(Button view) {
+        view.setEnabled(false);
+        view.setTextColor(Color.WHITE);
+        view.setBackground(getDrawable(R.drawable.active_btn_rounded));
+    }
+    private void disableButton(Button view) {
+        view.setEnabled(true);
+        view.setTextColor(ContextCompat.getColor(this, R.color.bazookasPrimary));
+        view.setBackground(getDrawable(R.drawable.inactive_btn_rounded));
+    }
+
+    private void handlePressed(boolean isTimeline, Button view) {
+        if (isTimeline) {
+            enableButton((Button) findViewById(R.id.toolbar_timeline));
+            disableButton((Button) findViewById(R.id.toolbar_hashtag));
+            updateRecyclerData(subject.getUserTweets());
+        } else {
+            enableButton((Button) findViewById(R.id.toolbar_hashtag));
+            disableButton((Button) findViewById(R.id.toolbar_timeline));
+            updateRecyclerData(subject.getHashtagTweets());
+        }
+    }
+
+    public void timelinePressed(View view) {
+        Log.d(LOG_TAG, "timelinePressed");
+        handlePressed(true, (Button) view);
+    }
+
+    public void hashtagsPressed(View view) {
+        Log.d(LOG_TAG, "hashtagsPressed");
+        handlePressed(false, (Button) view);
     }
 }
