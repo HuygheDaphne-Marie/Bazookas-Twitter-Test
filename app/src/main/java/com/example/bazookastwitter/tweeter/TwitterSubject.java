@@ -30,7 +30,9 @@ public class TwitterSubject implements TwitterSubjectInterface {
     private volatile List<Status> userTweets = new ArrayList<>();
     private volatile List<Status> hashtagTweets = new ArrayList<>();
 
-    public TwitterSubject() {
+    private static final TwitterSubject instance = new TwitterSubject();
+
+    private TwitterSubject() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(BuildConfig.API_CONSUMERKEY)
@@ -45,6 +47,10 @@ public class TwitterSubject implements TwitterSubjectInterface {
         fetchHashtagTweets("#wearebazookas"); // TODO make these class properties??
         fetchUserTweets("wearebazookas");
         startStream("#wearebazookas", "wearebazookas");
+    }
+
+    public static TwitterSubject getInstance() {
+        return instance;
     }
 
     @Override
