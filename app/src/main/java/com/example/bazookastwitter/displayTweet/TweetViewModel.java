@@ -18,6 +18,8 @@ public class TweetViewModel implements TweetViewModelInterface {
     private Bitmap img = null;
     private String bodyText;
     private String dateText;
+    private int favoritesCount;
+    private int retweetCount;
 
     public TweetViewModel(@NonNull final Status tweet) {
         setHeaderText("@"+tweet.getUser().getScreenName());
@@ -25,6 +27,8 @@ public class TweetViewModel implements TweetViewModelInterface {
         setBodyText(cleanupBodyText(tweet));
         DateFormat df = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
         setDateText(df.format(tweet.getCreatedAt()));
+        setFavoritesCount(tweet.getFavoriteCount());
+        setRetweetCount(tweet.getRetweetCount());
     }
 
     @NonNull
@@ -77,7 +81,6 @@ public class TweetViewModel implements TweetViewModelInterface {
             setImgUrl(media[0].getMediaURL());
         }
     }
-
     @Override
     public boolean equals(Object other) {
         if(other.getClass() == this.getClass()) {
@@ -86,5 +89,20 @@ public class TweetViewModel implements TweetViewModelInterface {
         } else {
             return false;
         }
+    }
+
+    @NonNull
+    public int getFavoritesCount() {
+        return favoritesCount;
+    }
+    public void setFavoritesCount(@NonNull int favoritesCount) {
+        this.favoritesCount = favoritesCount;
+    }
+    @NonNull
+    public int getRetweetCount() {
+        return retweetCount;
+    }
+    public void setRetweetCount(@NonNull int retweetCount) {
+        this.retweetCount = retweetCount;
     }
 }
