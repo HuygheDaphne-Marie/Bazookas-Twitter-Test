@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     }
 
     public void showBottomSheetDialogFragment(TweetViewModelInterface clickedTweet) {
-
         BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
         bottomSheetFragment.setTweet(clickedTweet);
         bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
