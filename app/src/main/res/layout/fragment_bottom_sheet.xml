@@ -45,21 +45,33 @@
 
         <TextView
             android:id="@+id/bottom_sheet_place"
+            android:drawableStart="@drawable/ic_location_dark_24dp"
+            android:textColor="@color/dark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:drawablePadding="4dp"
             android:visibility="gone"/>
 
         <TextView
             android:id="@+id/bottom_sheet_favorites_count"
+            android:drawableStart="@drawable/ic_favorite_dark_24dp"
+            android:textColor="@color/dark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_margin"/>
+            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/activity_margin"
+            android:drawablePadding="4dp"/>
 
         <TextView
             android:id="@+id/bottom_sheet_retweet_count"
+            android:drawableStart="@drawable/ic_retweet_dark_24dp"
+            android:textColor="@color/dark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_margin"/>
+            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/activity_margin"
+            android:drawablePadding="4dp"/>
 
     </LinearLayout>
 
