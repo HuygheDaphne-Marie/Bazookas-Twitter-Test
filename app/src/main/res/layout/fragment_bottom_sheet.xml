@@ -50,7 +50,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginEnd="@dimen/activity_margin"
             android:drawablePadding="4dp"
+            android:visibility="gone"/>
+
+        <View
+            android:id="@+id/bottom_sheet_optional_line"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/dark"
             android:visibility="gone"/>
 
         <TextView
@@ -61,7 +69,13 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_marginStart="@dimen/activity_margin"
+            android:layout_marginEnd="@dimen/activity_margin"
             android:drawablePadding="4dp"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/dark" />
 
         <TextView
             android:id="@+id/bottom_sheet_retweet_count"

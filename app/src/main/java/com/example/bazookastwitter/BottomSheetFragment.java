@@ -43,6 +43,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             TextView place = view.findViewById(R.id.bottom_sheet_place);
             place.setText(tweet.getPlaceName());
             place.setVisibility(View.VISIBLE);
+            view.findViewById(R.id.bottom_sheet_optional_line).setVisibility(View.VISIBLE);
         }
 
         TextView body = view.findViewById(R.id.bottom_sheet_body);
