@@ -16,7 +16,6 @@ public class TweetViewModel implements TweetViewModelInterface {
     private final String LOG_TAG = "myapp:TweetViewModel";
     private String headerText;
     private String imgUrl;
-    private Bitmap img = null;
     private String bodyText;
     private String dateText;
     private int favoritesCount;
@@ -77,13 +76,6 @@ public class TweetViewModel implements TweetViewModelInterface {
         if(place != null) {
             this.placeName = place.getName();
         }
-    }
-
-    public Bitmap getImg() {
-        return img;
-    }
-    public void setImg(@NonNull Bitmap img) {
-        this.img = img;
     }
 
     public String getImgUrl() {
