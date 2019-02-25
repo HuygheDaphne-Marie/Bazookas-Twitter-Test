@@ -31,15 +31,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
-
-        Button closeBtn = view.findViewById(R.id.bottom_sheet_closer);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
+        setUpCloseButton(view);
 
         if (tweet.getImg() != null) {
             ImageView image = view.findViewById(R.id.bottom_sheet_image);
@@ -62,5 +54,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         favorites.setText(String.valueOf(tweet.getFavoritesCount()));
         retweets.setText(String.valueOf(tweet.getRetweetCount()));
         return view;
+    }
+
+    private void setUpCloseButton(View view) {
+        Button closeBtn = view.findViewById(R.id.bottom_sheet_closer);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
     }
 }
