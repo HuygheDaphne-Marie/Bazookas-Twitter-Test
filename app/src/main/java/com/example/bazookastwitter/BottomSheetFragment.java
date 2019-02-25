@@ -34,12 +34,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         Button closeBtn = view.findViewById(R.id.bottom_sheet_closer);
         closeBtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
+
 
         if (tweet.getImg() != null) {
             ImageView image = view.findViewById(R.id.bottom_sheet_image);
@@ -47,10 +47,20 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             image.setVisibility(View.VISIBLE);
         }
 
+        if (tweet.getPlaceName() != null) {
+            TextView place = view.findViewById(R.id.bottom_sheet_place);
+            place.setText(tweet.getPlaceName());
+            place.setVisibility(View.VISIBLE);
+        }
+
         TextView body = view.findViewById(R.id.bottom_sheet_body);
         TextView date = view.findViewById(R.id.bottom_sheet_date);
+        TextView favorites = view.findViewById(R.id.bottom_sheet_favorites_count);
+        TextView retweets = view.findViewById(R.id.bottom_sheet_retweet_count);
         body.setText(tweet.getBodyText());
         date.setText(tweet.getDateText());
+        favorites.setText(String.valueOf(tweet.getFavoritesCount()));
+        retweets.setText(String.valueOf(tweet.getRetweetCount()));
         return view;
     }
 }
