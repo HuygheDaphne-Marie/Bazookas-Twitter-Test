@@ -38,4 +38,29 @@
         android:textAllCaps="true"
         android:textColor="@color/light"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/bottom_sheet_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/bottom_sheet_favorites_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_margin"/>
+
+        <TextView
+            android:id="@+id/bottom_sheet_retweet_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_margin"/>
+
+    </LinearLayout>
+
 </LinearLayout>
