@@ -33,7 +33,7 @@ public class TweetViewHolder extends RecyclerView.ViewHolder implements View.OnC
             if(viewModel.getImg() != null) {
                 imageView.setImageBitmap(viewModel.getImg());
             } else {
-                Ion.with(imageView)
+                Ion.with(imageView)// TODO glide
                         .load(viewModel.getImgUrl())
                         .withBitmapInfo()
                         .setCallback(new FutureCallback<ImageViewBitmapInfo>() {

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import twitter4j.MediaEntity;
+import twitter4j.Place;
 import twitter4j.Status;
 import twitter4j.URLEntity;
 
@@ -18,6 +19,9 @@ public class TweetViewModel implements TweetViewModelInterface {
     private Bitmap img = null;
     private String bodyText;
     private String dateText;
+    private int favoritesCount;
+    private int retweetCount;
+    private String placeName;
 
     public TweetViewModel(@NonNull final Status tweet) {
         setHeaderText("@"+tweet.getUser().getScreenName());
@@ -25,6 +29,9 @@ public class TweetViewModel implements TweetViewModelInterface {
         setBodyText(cleanupBodyText(tweet));
         DateFormat df = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
         setDateText(df.format(tweet.getCreatedAt()));
+        setFavoritesCount(tweet.getFavoriteCount());
+        setRetweetCount(tweet.getRetweetCount());
+        setPlaceName(tweet.getPlace());
     }
 
     @NonNull
@@ -47,6 +54,29 @@ public class TweetViewModel implements TweetViewModelInterface {
     }
     public void setDateText(@NonNull final String dateText) {
         this.dateText = dateText;
+    }
+    @NonNull
+    public int getFavoritesCount() {
+        return favoritesCount;
+    }
+    public void setFavoritesCount(@NonNull int favoritesCount) {
+        this.favoritesCount = favoritesCount;
+    }
+    @NonNull
+    public int getRetweetCount() {
+        return retweetCount;
+    }
+    public void setRetweetCount(@NonNull int retweetCount) {
+        this.retweetCount = retweetCount;
+    }
+
+    public String getPlaceName() {
+        return placeName;
+    }
+    public void setPlaceName(Place place) {
+        if(place != null) {
+            this.placeName = place.getName();
+        }
     }
 
     public Bitmap getImg() {
@@ -77,7 +107,6 @@ public class TweetViewModel implements TweetViewModelInterface {
             setImgUrl(media[0].getMediaURL());
         }
     }
-
     @Override
     public boolean equals(Object other) {
         if(other.getClass() == this.getClass()) {

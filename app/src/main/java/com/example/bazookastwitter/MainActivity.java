@@ -158,9 +158,12 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
 
     @Override
     public void onTweetClick(int position) {
-        Log.d(LOG_TAG, activeTweets.get(position).toString());
-        // get tweet data
-        // pass tweet data to modal
-        // open modal with tweet data
+        showBottomSheetDialogFragment(activeTweets.get(position));
+    }
+
+    private void showBottomSheetDialogFragment(TweetViewModelInterface clickedTweet) {
+        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+        bottomSheetFragment.setTweet(clickedTweet);
+        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
     }
 }
