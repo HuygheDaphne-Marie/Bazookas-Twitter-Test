@@ -1,23 +1,21 @@
 package com.example.bazookastwitter.displayTweet;
 
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bazookastwitter.R;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.ImageViewBitmapInfo;
-import com.koushikdutta.ion.Ion;
+
 
 public class TweetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private TextView headerTextView, bodyTextView, dateTextView;
     private ImageView imageView;
     private OnTweetListener onTweetListener;
 
-    public TweetViewHolder(@NonNull View itemView, OnTweetListener onTweetListener) {
+    public TweetViewHolder(@NonNull View itemView, @NonNull OnTweetListener onTweetListener) {
         super(itemView);
         headerTextView = itemView.findViewById(R.id.header_text);
         imageView = itemView.findViewById(R.id.content_image);
@@ -30,20 +28,7 @@ public class TweetViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public void bindData(final TweetViewModelInterface viewModel) {
         headerTextView.setText(viewModel.getHeaderText());
         if(imageView != null) {
-            if(viewModel.getImg() != null) {
-                imageView.setImageBitmap(viewModel.getImg());
-            } else {
-                Ion.with(imageView)// TODO glide
-                        .load(viewModel.getImgUrl())
-                        .withBitmapInfo()
-                        .setCallback(new FutureCallback<ImageViewBitmapInfo>() {
-                            @Override
-                            public void onCompleted(Exception e, ImageViewBitmapInfo result) {
-                                Bitmap b = result.getBitmapInfo().bitmap;
-                                viewModel.setImg(b);
-                            }
-                        });
-                }
+            Glide.with(imageView).load(viewModel.getImgUrl()).into(imageView);
         }
         bodyTextView.setText(viewModel.getBodyText());
         dateTextView.setText(viewModel.getDateText());

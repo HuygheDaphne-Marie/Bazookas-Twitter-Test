@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bazookastwitter.displayTweet.TweetViewModelInterface;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
@@ -33,9 +34,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         final View view = inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
         setUpCloseButton(view);
 
-        if (tweet.getImg() != null) {
+        if (tweet.getImgUrl() != null) {
             ImageView image = view.findViewById(R.id.bottom_sheet_image);
-            image.setImageBitmap(tweet.getImg());
+            Glide.with(image).load(tweet.getImgUrl()).into(image);
             image.setVisibility(View.VISIBLE);
         }
 

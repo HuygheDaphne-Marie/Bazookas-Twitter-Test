@@ -16,9 +16,6 @@ public interface TweetViewModelInterface {
     String getDateText();
     void setDateText(@NonNull final String dateText);
 
-    Bitmap getImg(); // TODO kinda optional no? maybe make a second interface?
-    void setImg(@NonNull Bitmap img);
-
     String getImgUrl();
     void setImgUrl(@NonNull String imgUrl);
 
