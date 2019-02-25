@@ -4,10 +4,10 @@
     <item
         android:drawable="@color/bazookasPrimary"/>
 
-    <!--<item> TODO Get img for splash -->
-        <!--<bitmap-->
-            <!--android:gravity="center"-->
-            <!--android:src="@mipmap/ic_launcher"/>-->
-    <!--</item>-->
+    <item
+        android:drawable="@drawable/bazookas_logo_white"
+        android:height="96dp"
+        android:width="96dp"
+        android:gravity="center"/>
 
 </layer-list>
