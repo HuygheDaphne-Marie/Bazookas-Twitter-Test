@@ -4,10 +4,10 @@
     <item
         android:drawable="@color/bazookasPrimary"/>
 
-    <item
-        android:drawable="@drawable/bazookas_logo_white"
-        android:height="96dp"
-        android:width="96dp"
-        android:gravity="center"/>
+    <item>
+        <bitmap
+            android:src="@drawable/bazookas_logo_white"
+            android:gravity="center"/>
+    </item>
 
 </layer-list>

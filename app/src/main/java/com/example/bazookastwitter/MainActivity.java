@@ -1,6 +1,9 @@
 package com.example.bazookastwitter;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,9 +50,14 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         Log.v(LOG_TAG, "App started!");
 
         // Create & attach to observable
-        this.subject = TwitterSubject.getInstance();
-        this.subject.attach(this);
-
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if(activeNetworkInfo != null) {
+            this.subject = TwitterSubject.getInstance();
+            this.subject.attach(this);
+        } else {
+            Log.v(LOG_TAG, "No internet connection :^( ");
+        }
         // Setup View
         timelineBtn = findViewById(R.id.toolbar_timeline);
         hashtagsBtn = findViewById(R.id.toolbar_hashtag);
