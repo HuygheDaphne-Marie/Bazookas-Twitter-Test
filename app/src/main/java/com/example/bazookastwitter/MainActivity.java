@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     private final String LOG_TAG = "myapp:mainActivity";
     private TwitterSubjectInterface subject;
     private List<TweetViewModelInterface> activeTweets = new ArrayList<>();
-    private List<TweetViewModelInterface> userTweets = new ArrayList<>(); // TODO *yuck*
-    private List<TweetViewModelInterface> hashtagTweets = new ArrayList<>();
 
     // Views //
     private RecyclerView recyclerView;
@@ -103,53 +101,22 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     @Override
     public void update(final String listName) {
         Log.v(LOG_TAG, "Got update");
-        if(listName.equals("userTweets")) {
-            updateTweetModelList(userTweets, subject.getUserTweets());
-            if(!timelineBtn.isEnabled()) {
-                updateRecyclerData(userTweets);
-            }
+        if(listName.equals("userTweets") && !timelineBtn.isEnabled()) {
+            updateRecyclerData(subject.getUserTweets());
         }
 
-        if(listName.equals("hashtagTweets")) {
-            updateTweetModelList(hashtagTweets, subject.getHashtagTweets());
-            if(!hashtagsBtn.isEnabled()) {
-                updateRecyclerData(hashtagTweets);
-            }
+        if(listName.equals("hashtagTweets") && !hashtagsBtn.isEnabled()) {
+            updateRecyclerData(subject.getHashtagTweets());
         }
     }
-
-
-    private void updateTweetModelList(List<TweetViewModelInterface> list, List<Status> tweetList) {
-        if(list.size() != 0) {
-            appendToTweetModels(list, tweetList);
-        } else {
-            setTweetModels(list, tweetList);
-        }
-    } // TODO this is a lot of functions all related to eachtoher, class maybe?
-    private void setTweetModels(List<TweetViewModelInterface> tweetModels, List<Status> tweets) {
-        for(Status tweet :  tweets) {
-            tweetModels.add(new TweetViewModel(tweet));
-        }
-    }
-    private void appendToTweetModels(List<TweetViewModelInterface> oldTweets, List<Status> newTweets) {
-        boolean gotToOldTweet = false;
-        int idx = 0;
-        while (!gotToOldTweet) {
-            TweetViewModelInterface newTweetModel = new TweetViewModel(newTweets.get(idx));
-            if(!newTweetModel.equals(oldTweets.get(idx))) {
-                oldTweets.add(0, newTweetModel);
-            } else {
-                gotToOldTweet = true;
-            }
-            idx++;
-        }
-    }
-    private void updateRecyclerData(final List<TweetViewModelInterface> newTweetsModels) {
+    private void updateRecyclerData(final List<Status> tweets) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 activeTweets.clear();
-                activeTweets.addAll(newTweetsModels);
+                for(Status tweet : tweets) {
+                    activeTweets.add(new TweetViewModel(tweet));
+                }
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -169,11 +136,11 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         if (isTimeline) {
             enableButton(timelineBtn);
             disableButton(hashtagsBtn);
-            updateRecyclerData(userTweets);
+            updateRecyclerData(subject.getUserTweets());
         } else {
             enableButton(hashtagsBtn);
             disableButton(timelineBtn);
-            updateRecyclerData(hashtagTweets);
+            updateRecyclerData(subject.getHashtagTweets());
         }
     }
 
