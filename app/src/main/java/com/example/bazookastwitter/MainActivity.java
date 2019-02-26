@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     private boolean checkNetworkConnection(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null;
+        return activeNetworkInfo.isConnected();
     }
 
     @Override
@@ -133,14 +133,16 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         view.setBackground(getDrawable(R.drawable.inactive_btn_rounded));
     }
     private void handlePressed(boolean isTimeline, Button view) {
-        if (isTimeline) {
-            enableButton(timelineBtn);
-            disableButton(hashtagsBtn);
-            updateRecyclerData(subject.getUserTweets());
-        } else {
-            enableButton(hashtagsBtn);
-            disableButton(timelineBtn);
-            updateRecyclerData(subject.getHashtagTweets());
+        if(checkNetworkConnection(view.getContext())) {
+            if (isTimeline) {
+                enableButton(timelineBtn);
+                disableButton(hashtagsBtn);
+                updateRecyclerData(subject.getUserTweets());
+            } else {
+                enableButton(hashtagsBtn);
+                disableButton(timelineBtn);
+                updateRecyclerData(subject.getHashtagTweets());
+            }
         }
     }
 
