@@ -21,7 +21,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
             android:adjustViewBounds="true"
             android:src="@drawable/bazookas_logo_primary"
             android:contentDescription="@string/logo" />

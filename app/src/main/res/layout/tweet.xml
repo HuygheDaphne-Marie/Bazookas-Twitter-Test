@@ -12,6 +12,7 @@
     <!-- android:paddingTop="@dimen/activity_margin" -->
 
     <ImageView
+        android:id="@+id/post_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/point"
@@ -26,7 +27,8 @@
         android:letterSpacing="0.2"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="@color/bazookasPrimary"/>
+        android:textColor="@color/bazookasPrimary"
+        android:layout_below="@id/post_header"/>
     <TextView
         android:id="@+id/body_text"
         android:layout_width="match_parent"
