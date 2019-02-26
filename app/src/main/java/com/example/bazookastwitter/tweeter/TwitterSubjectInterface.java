@@ -4,10 +4,10 @@ import java.util.List;
 import twitter4j.Status;
 
 public interface TwitterSubjectInterface {
-    public List<Status> getUserTweets();
-    public List<Status> getHashtagTweets();
-    public void setUserTweets(List<Status> tweets);
-    public void setHashtagTweets(List<Status> tweets);
-    public void attach(TwitterObserverInterface observer);
-    public void notifyAllObservers(String nameOfListThatGotUpdated);
+    List<Status> getUserTweets();
+    List<Status> getHashtagTweets();
+    void setUserTweets(List<Status> tweets);
+    void setHashtagTweets(List<Status> tweets);
+    void attach(TwitterObserverInterface observer);
+    void notifyAllObservers(String nameOfListThatGotUpdated);
 }
