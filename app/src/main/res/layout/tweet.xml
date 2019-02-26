@@ -4,19 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/activity_margin"
-    android:layout_marginBottom="@dimen/activity_margin"
+    android:layout_marginBottom="@dimen/activity_margin">
 
-    android:paddingBottom="@dimen/activity_margin"
-    android:background="@color/white">
-
-    <!-- android:paddingTop="@dimen/activity_margin" -->
+    <!--android:paddingTop="@dimen/activity_margin"-->
+    <!--android:paddingBottom="@dimen/activity_margin"-->
 
     <ImageView
         android:id="@+id/post_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/point"
-        android:layout_marginTop="-15dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/postheader_noshadow_small"
         android:layout_centerHorizontal="true"/>
 
     <TextView
@@ -28,7 +26,9 @@
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/bazookasPrimary"
-        android:layout_below="@id/post_header"/>
+        android:layout_below="@id/post_header"
+        android:background="@color/white"/>
+
     <TextView
         android:id="@+id/body_text"
         android:layout_width="match_parent"
@@ -37,7 +37,8 @@
         android:paddingLeft="@dimen/activity_margin"
         android:paddingRight="@dimen/activity_margin"
         android:textColor="@color/dark"
-        android:layout_below="@id/header_text"/>
+        android:layout_below="@id/header_text"
+        android:background="@color/white"/>
 
     <TextView
         android:id="@+id/date_text"
@@ -48,5 +49,7 @@
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/light"
-        android:layout_below="@id/body_text"/>
+        android:layout_below="@id/body_text"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/activity_margin"/>
 </RelativeLayout>
