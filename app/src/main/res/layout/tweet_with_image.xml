@@ -4,47 +4,56 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    android:layout_marginBottom="16dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:background="@color/white">
+    android:layout_marginBottom="16dp">
 
-    <TextView
-        android:id="@+id/header_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="This is some temp text"
-        android:letterSpacing="0.2"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/bazookasPrimary"/>
-    <ImageView
-        android:id="@+id/content_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header_text"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/tweet_image_content" />
-    <TextView
-        android:id="@+id/body_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="This is some temp text"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textColor="@color/dark"
-        android:layout_below="@id/content_image"/>
+    <include layout="@layout/tweet_head"
+        android:id="@+id/post_header"/>
 
-    <TextView
-        android:id="@+id/date_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="This is some temp text"
-        android:letterSpacing="0.2"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/light"
-        android:layout_below="@id/body_text"/>
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/activity_margin"
+        android:layout_below="@id/post_header">
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="This is some temp text"
+            android:letterSpacing="0.2"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/bazookasPrimary" />
+        <ImageView
+            android:id="@+id/content_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/tweet_image_content" />
+        <TextView
+            android:id="@+id/body_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="This is some temp text"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/dark"/>
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="This is some temp text"
+            android:letterSpacing="0.2"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/light"/>
+
+    </LinearLayout>
+
+
 </RelativeLayout>

@@ -6,50 +6,47 @@
     android:layout_marginTop="@dimen/activity_margin"
     android:layout_marginBottom="@dimen/activity_margin">
 
-    <!--android:paddingTop="@dimen/activity_margin"-->
-    <!--android:paddingBottom="@dimen/activity_margin"-->
+    <include layout="@layout/tweet_head"
+        android:id="@+id/post_header"/>
 
-    <ImageView
-        android:id="@+id/post_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/postheader_noshadow_small"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:id="@+id/header_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="This is some temp text"
-        android:letterSpacing="0.2"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/bazookasPrimary"
-        android:layout_below="@id/post_header"
-        android:background="@color/white"/>
-
-    <TextView
-        android:id="@+id/body_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="This is some temp text"
-        android:paddingLeft="@dimen/activity_margin"
-        android:paddingRight="@dimen/activity_margin"
-        android:textColor="@color/dark"
-        android:layout_below="@id/header_text"
-        android:background="@color/white"/>
-
-    <TextView
-        android:id="@+id/date_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="This is some temp text"
-        android:letterSpacing="0.2"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/light"
-        android:layout_below="@id/body_text"
+        android:orientation="vertical"
         android:background="@color/white"
-        android:paddingBottom="@dimen/activity_margin"/>
+        android:paddingBottom="@dimen/activity_margin"
+        android:layout_below="@id/post_header">
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="This is some temp text"
+            android:letterSpacing="0.2"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/bazookasPrimary" />
+
+        <TextView
+            android:id="@+id/body_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="This is some temp text"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/activity_margin"
+            android:textColor="@color/dark" />
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="This is some temp text"
+            android:letterSpacing="0.2"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/light"/>
+
+    </LinearLayout>
+
+
 </RelativeLayout>
