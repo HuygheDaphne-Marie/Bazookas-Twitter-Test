@@ -74,7 +74,7 @@ public class TwitterSubject implements TwitterSubjectInterface {
     @Override
     public void notifyAllObservers(String nameOfListThatGotUpdated) {
         for(TwitterObserverInterface observer : observers) {
-            observer.update(nameOfListThatGotUpdated);
+            observer.twitterFeedUpdated(nameOfListThatGotUpdated);
         }
     }
 
