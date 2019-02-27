@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.bazookastwitter.displayTweet.OnTweetListener;
 import com.example.bazookastwitter.displayTweet.TweetAdapter;
@@ -89,7 +90,9 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
             this.subject = new TwitterSubject("wearebazookas", "#wearebazookas");
             this.subject.attach(this);
         } else {
-            Log.v(LOG_TAG, "No internet connection :^( ");
+            String noInternetMessage = "No internet connection :^(";
+            Log.v(LOG_TAG, noInternetMessage);
+            launchToast(noInternetMessage, context);
         }
     }
     private boolean checkNetworkConnection(Context context) {
@@ -99,13 +102,11 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     }
 
     @Override
-    public void update(final String listName) {
+    public void twitterFeedUpdated(final String listName) {
         Log.v(LOG_TAG, "Got update");
         if(listName.equals("userTweets") && !timelineBtn.isEnabled()) {
             updateRecyclerData(subject.getUserTweets());
-        }
-
-        if(listName.equals("hashtagTweets") && !hashtagsBtn.isEnabled()) {
+        } else if(listName.equals("hashtagTweets") && !hashtagsBtn.isEnabled()) {
             updateRecyclerData(subject.getHashtagTweets());
         }
     }
@@ -132,8 +133,12 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         view.setTextColor(ContextCompat.getColor(this, R.color.bazookasPrimary));
         view.setBackground(getDrawable(R.drawable.inactive_btn_rounded));
     }
-    private void handlePressed(boolean isTimeline, Button view) {
+    private void handleButtonPressed(boolean isTimeline, Button view) {
         if(checkNetworkConnection(view.getContext())) {
+            if(subject == null) { // If the app starts without internet subject might be null if internet connection is restored later
+                setupObservable(view.getContext());
+            }
+
             if (isTimeline) {
                 enableButton(timelineBtn);
                 disableButton(hashtagsBtn);
@@ -143,13 +148,18 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
                 disableButton(timelineBtn);
                 updateRecyclerData(subject.getHashtagTweets());
             }
+        } else {
+            launchToast("Couldn't get tweets", view.getContext());
         }
+    }
+    private void launchToast(String toastText, Context context) {
+        Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
     }
 
     public void timelinePressed(View view) {
-        handlePressed(true, (Button) view);
+        handleButtonPressed(true, (Button) view);
     }
     public void hashtagsPressed(View view) {
-        handlePressed(false, (Button) view);
+        handleButtonPressed(false, (Button) view);
     }
 }
