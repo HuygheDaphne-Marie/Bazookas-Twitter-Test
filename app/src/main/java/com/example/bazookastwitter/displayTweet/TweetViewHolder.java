@@ -25,7 +25,7 @@ public class TweetViewHolder extends RecyclerView.ViewHolder implements View.OnC
         itemView.setOnClickListener(this);
     }
 
-    public void bindData(final TweetViewModelInterface viewModel) {
+    public void bindDataToTweetView(final TweetViewModelInterface viewModel) {
         headerTextView.setText(viewModel.getHeaderText());
         if(imageView != null) {
             Glide.with(imageView).load(viewModel.getImgUrl()).into(imageView);

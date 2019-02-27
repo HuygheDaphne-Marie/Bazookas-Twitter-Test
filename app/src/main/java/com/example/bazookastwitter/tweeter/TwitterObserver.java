@@ -21,7 +21,7 @@ public class TwitterObserver implements TwitterObserverInterface {
     }
 
     @Override
-    public void update(String listName) {
+    public void twitterFeedUpdated(String listName) {
         Log.v("myapp", "Update!");
         if(listName.equals("userTweets")) {
             for(Status status : subject.getUserTweets()) {

@@ -1,6 +1,5 @@
 package com.example.bazookastwitter.displayTweet;
 
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import java.text.DateFormat;
@@ -13,14 +12,8 @@ import twitter4j.Status;
 import twitter4j.URLEntity;
 
 public class TweetViewModel implements TweetViewModelInterface {
-    private final String LOG_TAG = "myapp:TweetViewModel";
-    private String headerText;
-    private String imgUrl;
-    private String bodyText;
-    private String dateText;
-    private int favoritesCount;
-    private int retweetCount;
-    private String placeName;
+    private String headerText, imgUrl, bodyText, dateText, placeName;
+    private int favoritesCount, retweetCount;
 
     public TweetViewModel(@NonNull final Status tweet) {
         setHeaderText("@"+tweet.getUser().getScreenName());

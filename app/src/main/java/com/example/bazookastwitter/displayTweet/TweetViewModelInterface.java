@@ -1,6 +1,5 @@
 package com.example.bazookastwitter.displayTweet;
 
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import twitter4j.Place;
