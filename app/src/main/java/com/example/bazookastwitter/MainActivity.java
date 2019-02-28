@@ -30,17 +30,19 @@ import java.util.List;
 import twitter4j.Status;
 
 public class MainActivity extends AppCompatActivity implements TwitterObserverInterface, OnTweetListener {
+    //region properties
     private final String LOG_TAG = "myapp:mainActivity";
     private TwitterSubjectInterface subject;
     private List<TweetViewModelInterface> activeTweets = new ArrayList<>();
+    //endregion
 
-    // Views //
+    //region views
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private Button timelineBtn;
     private Button hashtagsBtn;
-
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
         mAdapter = new TweetAdapter(this.activeTweets, this);
         recyclerView.setAdapter(mAdapter);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -98,9 +99,10 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
     private boolean checkNetworkConnection(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo.isConnected();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    //region tweetUpdating & recylerUpdating
     @Override
     public void twitterFeedUpdated(final String listName) {
         Log.v(LOG_TAG, "Got update");
@@ -117,21 +119,21 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
                 activeTweets.clear();
                 for(Status tweet : tweets) {
                     activeTweets.add(new TweetViewModel(tweet));
+                    //TODO
                 }
                 mAdapter.notifyDataSetChanged();
             }
         });
     }
+    //endregion
 
-    private void enableButton(Button view) {
-        view.setEnabled(false);
-        view.setTextColor(Color.WHITE);
-        view.setBackground(getDrawable(R.drawable.active_btn_rounded));
-    }
-    private void disableButton(Button view) {
-        view.setEnabled(true);
-        view.setTextColor(ContextCompat.getColor(this, R.color.bazookasPrimary));
-        view.setBackground(getDrawable(R.drawable.inactive_btn_rounded));
+    //region buttonHandling
+    private void toggleButton(Button view) {
+        boolean isEnabled = view.isEnabled();
+        view.setEnabled(!isEnabled);
+        view.setTextColor(isEnabled ? Color.WHITE : ContextCompat.getColor(this, R.color.bazookasPrimary));
+        view.setBackground(getDrawable(isEnabled ? R.drawable.active_btn_rounded : R.drawable.inactive_btn_rounded));
+
     }
     private void handleButtonPressed(boolean isTimeline, Button view) {
         if(checkNetworkConnection(view.getContext())) {
@@ -139,27 +141,22 @@ public class MainActivity extends AppCompatActivity implements TwitterObserverIn
                 setupObservable(view.getContext());
             }
 
-            if (isTimeline) {
-                enableButton(timelineBtn);
-                disableButton(hashtagsBtn);
-                updateRecyclerData(subject.getUserTweets());
-            } else {
-                enableButton(hashtagsBtn);
-                disableButton(timelineBtn);
-                updateRecyclerData(subject.getHashtagTweets());
-            }
+            toggleButton(timelineBtn);
+            toggleButton(hashtagsBtn);
+            updateRecyclerData(isTimeline ? subject.getUserTweets() : subject.getHashtagTweets());
         } else {
             launchToast("Couldn't get tweets", view.getContext());
         }
     }
-    private void launchToast(String toastText, Context context) {
-        Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
-    }
-
     public void timelinePressed(View view) {
         handleButtonPressed(true, (Button) view);
     }
     public void hashtagsPressed(View view) {
         handleButtonPressed(false, (Button) view);
+    }
+    //endregion
+
+    private void launchToast(String toastText, Context context) {
+        Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
     }
 }
